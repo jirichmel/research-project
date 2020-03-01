@@ -1,5 +1,6 @@
 ## Repository Description
 The following contents serve as description of the data and scripts found in this repository. This repository contains datasets in .csv form and relevant .ipynb python scripts.
+(Note: The scripts are .ipynb and github does not render such files. To render these files on github in your browser use the Firefox/Chromium/Chrome extension: https://github.com/iArunava/NoteBook-Buddy/)
 
 All the datasets in this repository were created using the datafiles provided by Dr. Luca Ghiringhelli of the Theory Department of Fritz Haber Institute of the Max Planck Society in Berlin and the datafiles from a Kaggle competition available at: https://www.kaggle.com/c/nomad2018-predict-transparent-conductors/data
 
@@ -38,5 +39,5 @@ In addition to these two folders, two .csv files called **general_train_DATA.csv
 
 The values lattice_vector_1_ang, lattice_vector_2_ang, lattice_vector_3_ang, lattice_angle_alpha_degree, lattice_angle_beta_degree, lattice_angle_gamma_degree from the Kaggle dataset were removed in this dataset.
 
-## kaggle_data_handling Script
+## kaggle_data_handling.ipynb Script
 The script used for the extraction the data in this dataset from the provided datafiles. The script uses a folder structure of the provided datafiles. Modification of the paths to the files is needed if the script is to be used.
