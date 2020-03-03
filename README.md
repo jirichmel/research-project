@@ -43,4 +43,4 @@ The values lattice_vector_1_ang, lattice_vector_2_ang, lattice_vector_3_ang, lat
 The script used for the extraction the data in this dataset from the provided datafiles. The script uses a folder structure of the provided datafiles. Modification of the paths to the files is needed if the script is to be used.
 
 ## Known Issues
-* The datafile number 464 seems to be incomplete or corrupted.
+* The datafile number 464 seems to be incomplete or corrupted. The datapoint was excluded from the dataset.
