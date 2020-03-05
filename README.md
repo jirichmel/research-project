@@ -13,7 +13,7 @@ These datasets contain not only the data after the calculation but also the atom
 
 There are two folders: train_relaxation_csv and test_relaxation_csv.
 
-The numbering in the files works as follows: 
+The numbering in the .csv files works as follows: 
 * **id** is the number of the material (the same numbering as in the Kaggle dataset).
 * **relaxation_step_number** labels the given relaxation step of the calculation of the particular material. Therefore, each material is characterized by one **id** number and a few **relaxation_step_number**s whose amount differs (Note: Some materials do not have any Relaxation steps and therefore do not have any relaxation step numbers. They are therefore absent in the four datasets which can be found in the folders for both train and test). The values belonging to the last relaxation step number are the final values of the calculation.
 
@@ -22,8 +22,8 @@ id | relaxation_step_number
 2 | 1
 2 | 2
 
-Each folder contains 4 .csv files:
-* **Item atoms_frac_xyz_relaxation_DATA.csv** - contains the fractional coordinates (fraction of given the lattice vectors) during the relaxation.
+Each folder contains 5 .csv files:
+* **atoms_frac_xyz_relaxation_DATA.csv** - contains the fractional coordinates (fraction of given the lattice vectors) during the relaxation.
 
 * **atoms_xyz_relaxation_DATA.csv** - contains the atomic positions of the atoms.
 
@@ -31,7 +31,7 @@ Each folder contains 4 .csv files:
 
 * **lattice_vector_relaxation.csv** - contains the lattice vector values during the relaxation.
 
-In addition to these two folders, two .csv files called **general_train_DATA.csv** and **general_test_DATA.csv** are included. They contain the spacegroup data, number of atoms and the cation percetages calculated using:
+* **general_DATA.csv** - contains the spacegroup data, number of atoms and the cation percetages calculated using:
 
 <img src="https://render.githubusercontent.com/render/math?math=x = \frac{ n_{Al} }{ n_{Al} %2B n_{Ga} %2B n_{In} } ">
 <img src="https://render.githubusercontent.com/render/math?math=y = \frac{ n_{Ga} }{ n_{Al} %2B n_{Ga} %2B n_{In} } ">
@@ -40,7 +40,7 @@ In addition to these two folders, two .csv files called **general_train_DATA.csv
 The values lattice_vector_1_ang, lattice_vector_2_ang, lattice_vector_3_ang, lattice_angle_alpha_degree, lattice_angle_beta_degree, lattice_angle_gamma_degree from the Kaggle dataset were removed in this dataset.
 
 ## kaggle_data_handling.ipynb Script
-The script used for the extraction the data in this dataset from the provided datafiles. The script uses a folder structure of the provided datafiles. Modification of the paths to the files is needed if the script is to be used.
+The script used for the extraction the data in this dataset from the provided datafiles. The script uses the folder structure of the provided datafiles. Modification of the paths to the files is needed if the script is to be reused. The scripts uses parallelization to multiple CPUs using the ray framework. The script is not optimized for maximum efficiency but works well.
 
 ## Known Issues
-* The datafile number 464 seems to be incomplete or corrupted. The datapoint was excluded from the dataset.
+* The datafile number 464 seems to be incomplete or corrupted. The datapoint was excluded from the datasets.
