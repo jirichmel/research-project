@@ -6,7 +6,7 @@ All the datasets in this repository were created using the datafiles provided by
 
 **The author would like to thank Dr. Luca Ghiringhelli for providing the datafiles.**
 
-## .csv Files
+## The Folder Structure Explained
 The datasets in the repository are structured into two main groups: train data and test data. Originally, there were 2400 train materials and 600 test materials. There are 7 duplicates and 2 datafiles were corrupted which makes it 2391 train materials (for more details view the end of this description where the section **Known Issues** is located) and 600 test materials. The split of the data is the same as in the Kaggle dataset for convinience and easy comparison of results.
 
 These datasets contain not only the data after the calculation but also the atomic positions, lattice vectors and energies during the converge of the atomic positions (relaxation). This additional data was not included in the Kaggle dataset.
@@ -17,8 +17,8 @@ The numbering in the .csv files works as follows:
 * **id** is the number of the material (the same numbering as in the Kaggle dataset).
 * **relaxation_step_number** labels the given relaxation step of the calculation of the particular material. Therefore, each material is characterized by one **id** number and a few **relaxation_step_number**s whose amount differs (Note: Some materials do not have any Relaxation steps and therefore do not have any relaxation step numbers. Therefore, they would be absent in the relaxation datasets. In such situation, the final atomic coordinates and energies are included with **relaxation_step_number** equal 0 to distiguish the nature of this datapoint in some way). The values belonging to the last relaxation step number are the final values of the calculation.
 An example of the head of the .csv file with relaxation data:
-id | relaxation_step_number | ...
------------- | ------------- | -------------
+id | relaxation_step_number
+------------ | -------------
 2 | 1
 2 | 2
 
@@ -54,7 +54,7 @@ Each **relaxation** folder contains 5 .csv files:
 
 The values lattice_vector_1_ang, lattice_vector_2_ang, lattice_vector_3_ang, lattice_angle_alpha_degree, lattice_angle_beta_degree, lattice_angle_gamma_degree from the Kaggle dataset were removed in this dataset.
 
-## kaggle_data_handling.ipynb Script
+## kaggle_data_handling Script
 The script used for the extraction the data in this dataset from the provided datafiles. The script uses the folder structure of the provided datafiles. Modification of the paths to the files is needed if the script is to be reused. The scripts uses parallelization to multiple CPUs using the ray framework. The script is not optimized for maximum efficiency. Parallel computation is recommended.
 
 ## Known Issues
