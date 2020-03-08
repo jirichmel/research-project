@@ -16,11 +16,12 @@ There are two folders: **train** and **test**.
 The numbering in the .csv files works as follows: 
 * **id** is the number of the material (the same numbering as in the Kaggle dataset).
 * **relaxation_step_number** labels the given relaxation step of the calculation of the particular material. Therefore, each material is characterized by one **id** number and a few **relaxation_step_number**s whose amount differs (Note: Some materials do not have any Relaxation steps and therefore do not have any relaxation step numbers. Therefore, they would be absent in the relaxation datasets. In such situation, the final atomic coordinates and energies are included with **relaxation_step_number** equal 0 to distiguish the nature of this datapoint in some way). The values belonging to the last relaxation step number are the final values of the calculation.
-An example of the head of the .csv file with relaxation data:
-id | relaxation_step_number
------------- | -------------
-2 | 1
-2 | 2
+An example of the start of the head of the .csv file with relaxation data:
+
+id | relaxation_step_number | ...
+------------ | ------------- | -------------
+2 | 1 | ...
+2 | 2 | ...
 
 The **test** and **train** folders contain 3 folders each:
 * **directory_tree** - contains a directory tree, where the parent directory of every material is named after its **id** and the coresponding final data files are in a child directory of the same name and the relaxation datafiles are in a child directory which has the name of the form **id.relaxation_step_number**. E.g. in **train**, the third material would have a parent folder named **3** its final values in a child folder named **3** and its first relaxation data in a different child folder named **3.1**.
