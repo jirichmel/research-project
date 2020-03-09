@@ -64,6 +64,7 @@ The script used for the extraction the data in this dataset from the provided da
 ## Known Issues
 * In **train**, the datafile number (**id**) 464 seems to be incomplete or corrupted. The datapoint was excluded from the datasets.
 * In **train**, the datafile number (**id**) 2189 seems to be incomplete or corrupted. The datapoint was excluded from the datasets.
+
 Source of the claims listed below: https://www.kaggle.com/c/nomad2018-predict-transparent-conductors/discussion/47998
 * In **train**, the materials with **id** 395 and 126 are duplicate. 126 was removed.
 * In **train**, the materials with **id** 1215 and 1886 are duplicate. 1215 was removed.
