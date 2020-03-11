@@ -59,8 +59,7 @@ Each **relaxation** folder contains 5 .csv files:
 The values lattice_vector_1_ang, lattice_vector_2_ang, lattice_vector_3_ang, lattice_angle_alpha_degree, lattice_angle_beta_degree, lattice_angle_gamma_degree from the Kaggle dataset were removed in this dataset.
 
 ## kaggle_data_handling Script
-The script used for the extraction the data in this dataset from the provided datafiles. The script uses the folder structure of the provided datafiles. Modification of the paths to the files is needed if the script is to be reused. The scripts uses parallelization to multiple CPUs using the ray framework. The script is not optimized for maximum efficiency. Parallel computation is recommended.
-
+The script used for the extraction the data in this dataset from the provided datafiles. The script uses the folder structure of the provided datafiles. Modification of the paths to the files is needed if the script is to be reused. The scripts uses parallelization to multiple CPUs using the ray framework. The script is not optimized for maximum efficiency. Parallel computation is recommended. The OLS_oxide_energies script contains a method to do an OLS fit of the 3 total energies needed to calculate the formation energy.
 ## Known Issues
 * In **train**, the datafile number (**id**) 464 seems to be incomplete or corrupted. The datapoint was excluded from the datasets.
 * In **train**, the datafile number (**id**) 2189 seems to be incomplete or corrupted. The datapoint was excluded from the datasets.
