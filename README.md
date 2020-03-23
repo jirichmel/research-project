@@ -72,3 +72,9 @@ Source of the claims listed below: https://www.kaggle.com/c/nomad2018-predict-tr
 * In **train**, the materials with **id** 531 and 1379 are duplicate. 531 was removed.
 * In **train**, the materials with **id** 2319 and 2337 are duplicate. 2319 was removed.
 * In **train**, the materials with **id** 2370 and 2333 are duplicate. 2370 was removed.
+
+## To Do
+Decide whether to include the following dataset and if so, how:
+
+https://repository.nomad-coe.eu/app/gui/dataset/id/nn56nNWzSOGmuf0ptRMymg
+https://repository.nomad-coe.eu/app/gui/dataset/id/K1QTEYCNRkaeb7JQzgihsw
