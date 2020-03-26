@@ -75,9 +75,13 @@ Source of the claims listed below: https://www.kaggle.com/c/nomad2018-predict-tr
 
 ## Matlab files:
 Exp_01.m: Least squares (LS) for 3descriptors (ratios of Al, Ga, In among metals), test and train sets as pre-defined, RMSE: 0.0931
+
 Exp_02.m: LS with Unigrams (Al, In, Ga are of type 2-8), RMSE: 0.0767
+
 Exp_04.m: LS with Unigrams for Al, In, Ga, O, RMSE: 0.0714
+
 ReadData.m: Input of data, save the workspace...
+
 Exp_10.m, 10a.m, 10b.m... 11b.m: sum over unigrams of Al, In, Ga of 1, r, r^2 and unigrams of O, RMSE: 0.445
 
 ## To Do
