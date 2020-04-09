@@ -60,6 +60,10 @@ The values lattice_vector_1_ang, lattice_vector_2_ang, lattice_vector_3_ang, lat
 
 ## kaggle_data_handling Script
 The script used for the extraction the data in this dataset from the provided datafiles. The script uses the folder structure of the provided datafiles. Modification of the paths to the files is needed if the script is to be reused. The scripts uses parallelization to multiple CPUs using the ray framework. The script is not optimized for maximum efficiency. Parallel computation is recommended. The OLS_oxide_energies script contains a method to do an OLS fit of the 3 total energies needed to calculate the formation energy.
+
+## ngram
+The ngram is a crystal graph created from the structure of the cell given by the atomic positions. The folder **ngram** contains everything related to this approach of interpreting the data.
+
 ## Known Issues
 * In **train**, the datafile number (**id**) 464 seems to be incomplete or corrupted. The datapoint was excluded from the datasets.
 * In **train**, the datafile number (**id**) 2189 seems to be incomplete or corrupted. The datapoint was excluded from the datasets.
@@ -73,7 +77,8 @@ Source of the claims listed below: https://www.kaggle.com/c/nomad2018-predict-tr
 * In **train**, the materials with **id** 2319 and 2337 are duplicate. 2319 was removed.
 * In **train**, the materials with **id** 2370 and 2333 are duplicate. 2370 was removed.
 
-## Matlab files:
+## matlab:
+This folder contains the matlab scripts. Further dectription below:
 Exp_01.m: Least squares (LS) for 3descriptors (ratios of Al, Ga, In among metals), test and train sets as pre-defined, RMSE: 0.0931
 
 Exp_02.m: LS with Unigrams (Al, In, Ga are of type 2-8), RMSE: 0.0767
