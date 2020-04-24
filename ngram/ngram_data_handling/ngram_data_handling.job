@@ -1,0 +1,22 @@
+#!/bin/bash
+### Job Name
+#PBS -N calc_matrices_1
+### required runtime
+#PBS -l walltime=24:00:00
+### queue for submission
+#PBS -q cpu_b
+
+# Merge output and error files
+#PBS -j oe
+
+### Request 16 GB of memory and 12 CPU cores ( old syntax)
+#PBS -l mem=16G,ncpus=12
+
+### start the job in the directory it was submitted from
+cd $PBS_O_WORKDIR
+
+# activate the Python virtual enviroment
+source bin/activate
+
+### run the application (with input from a .input file)
+cat ngram_data_handling.input | python ngram_data_handling.py
