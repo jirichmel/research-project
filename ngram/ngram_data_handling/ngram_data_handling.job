@@ -9,8 +9,8 @@
 # Merge output and error files
 #PBS -j oe
 
-### Request 16 GB of memory and 12 CPU cores ( old syntax)
-#PBS -l mem=16G,ncpus=12
+### Request 16 GB of memory and 16 CPU cores ( old syntax)
+#PBS -l mem=16G,ncpus=16
 
 ### start the job in the directory it was submitted from
 cd $PBS_O_WORKDIR
