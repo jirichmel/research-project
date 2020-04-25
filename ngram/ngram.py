@@ -142,6 +142,19 @@ def gengraph(minimal_distance_matrix, species_vector, ionic_radii, hypar=1.5):
                     G.add_edge(nodei,nodej)
     return G
 
+def get_neighbors(G):
+    """Get neigbors of every atom in the graph.
+    
+    Keyword arguments:
+    G -- the crystal graph.
+    """
+    atoms = G.number_of_nodes()
+    node_labels = sorted(dict(G.nodes.items()).keys(), key=lambda x: int(x.split()[1]))
+    dic = {}
+    for i in range(atoms):
+        dic[node_labels[i]] = list(G[node_labels[i]]) # list(G.neighbors(node_labels[i]))
+    return dic
+
 def get_hood(G):
     """Calculates the least amount of inbetween atoms between two atoms.
     
@@ -150,8 +163,13 @@ def get_hood(G):
     """
     atoms = G.number_of_nodes()
     path_length_matrix = np.zeros((atoms,atoms), dtype = int)
-    nodelabels = sorted(dict(G.nodes.items()).keys(), key = lambda x: int(x.split()[1]))
+    node_labels = sorted(dict(G.nodes.items()).keys(), key = lambda x: int(x.split()[1]))
     for i in range(atoms):
         for j in range(i):
-            path_length_matrix[i, j] = nx.shortest_path_length(G, nodelabels[i], nodelabels[j])
+            try:
+                path_length_matrix[i, j] = nx.shortest_path_length(G, node_labels[i], node_labels[j])
+            except nx.NetworkXNoPath:
+                print("There is no path between some atoms.")
+                print("Atoms:")
+                print(node_labels)
     return path_length_matrix

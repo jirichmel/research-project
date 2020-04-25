@@ -7,6 +7,7 @@ import networkx as nx
 import json
 import ray
 import time
+import ast
 import ngram
 
 def matrix_coding(mat):
@@ -20,11 +21,11 @@ def matrix_coding(mat):
     dim = mat.shape
     assert dim[0] == dim[1], "Error: The matrix is not a square matrix."
     vec = []
-    diag_val = int(mat[0,0])
+    diag_val = float(mat[0,0])
     vec.append(diag_val)
     for i in range(dim[0]):
         for j in range(i):
-            vec.append(int(mat[i,j]))
+            vec.append(float(mat[i,j]))
     return vec
 
 def matrix_decoding(vec):
@@ -88,11 +89,9 @@ def parse_input():
             break
         if not line.strip().startswith("#"):
             try:
-                contents.append(eval(line))
-            except SyntaxError:
-                contents.append(line)
-            except NameError:
-                contents.append(line)
+                contents.append(ast.literal_eval(line))
+            except ValueError:
+                raise SystemExit("Input not valid. Check the input file.")
     return contents
 
 start = time.time()

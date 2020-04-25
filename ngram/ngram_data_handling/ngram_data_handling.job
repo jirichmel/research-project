@@ -1,6 +1,6 @@
 #!/bin/bash
 ### Job Name
-#PBS -N calc_matrices_1
+#PBS -N calc_matrices_2
 ### required runtime
 #PBS -l walltime=24:00:00
 ### queue for submission
@@ -9,7 +9,7 @@
 # Merge output and error files
 #PBS -j oe
 
-### Request 16 GB of memory and 12 CPU cores ( old syntax)
+### Request x GB of memory and X CPU cores ( old syntax)
 #PBS -l mem=16G,ncpus=12
 
 ### start the job in the directory it was submitted from
