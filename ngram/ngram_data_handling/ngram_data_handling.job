@@ -9,8 +9,19 @@
 # Merge output and error files
 #PBS -j oe
 
+# get the number of CPUs from the .input file
+#PBS -v a=$(sed -n '/NUM_CPUS/{n;p;}' ngram_data_handling.input)
+
 ### Request x GB of memory and X CPU cores ( old syntax)
-#PBS -l mem=16G,ncpus=12
+#PBS -l mem=16G,ncpus=$a
+
+### Send me an e-mail when the job has aborted or finished.
+
+#PBS -m ae
+
+### Email address.
+
+#PBS -M chmelji6@fjfi.cvut.cz
 
 ### start the job in the directory it was submitted from
 cd $PBS_O_WORKDIR
@@ -18,5 +29,5 @@ cd $PBS_O_WORKDIR
 # activate the Python virtual enviroment
 source bin/activate
 
-### run the application (with input from a .input file)
+### run the application (with input from the .input file)
 cat ngram_data_handling.input | python ngram_data_handling.py
