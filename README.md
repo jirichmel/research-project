@@ -2,7 +2,7 @@
 The following contents serve as description of the data and scripts found in this repository. This repository contains datasets in .csv form and relevant python scripts in .ipynb and .py format.
 (Note: The scripts are .ipynb and github does not render such files. To render these files on github in your browser use the Firefox/Chromium/Chrome extension: https://github.com/iArunava/NoteBook-Buddy/)
 
-All the datasets in this repository were created using the datafiles provided by Dr. Luca Ghiringhelli of the Theory Department of Fritz Haber Institute of the Max Planck Society in Berlin and the datafiles from a Kaggle competition available at: https://www.kaggle.com/c/nomad2018-predict-transparent-conductors/data
+All the datasets in this repository were created using the datafiles provided by Dr. Luca Ghiringhelli of the Theory Department of Fritz Haber Institute of the Max Planck Society in Berlin, the datafiles from a Kaggle competition available at: https://www.kaggle.com/c/nomad2018-predict-transparent-conductors/data and from the NOMAD repository: https://repository.nomad-coe.eu/app/gui/dataset/id/nn56nNWzSOGmuf0ptRMymg or https://repository.nomad-coe.eu/app/gui/dataset/id/K1QTEYCNRkaeb7JQzgihsw.
 
 **The author would like to thank Dr. Luca Ghiringhelli for providing the datafiles.**
 
@@ -26,11 +26,14 @@ id | relaxation_step_number | ...
 . | . | ...
 . | . | ...
 
-The **test** and **train** folders contain 4 folders each:
+The **test** and **train** folders contain 5 folders each:
+* **additional** - contains the **forces.csv** dataset of forces on individual atoms during relaxation steps.
 * **directory_tree** - contains a directory tree, where the parent directory of every material is named after its **id** and the coresponding final data files are in a child directory of the same name and the relaxation datafiles are in a child directory which has the name of the form **id.relaxation_step_number**. E.g. in **train**, the third material would have a parent folder named **3** its final values in a child folder named **3** and its first relaxation data in a different child folder named **3.1**.
 * **final** - contains 4 .csv files of the final values: **atoms_frac_xyz.csv, atoms_xyz.csv, energy.csv, lattice_vector.csv**
 * **relaxation** - contains a child folder **with_all_zeros** (explained below). contais 5 .csv files of the relaxation values plus a file with general data describing the material: **atoms_frac_xyz_relaxation.csv, energy_relaxation.csv, lattice_vector_relaxation.csv, atoms_xyz_relaxation.csv, general.csv**
+* **start** - contains 4 .csv files of the starting geometries which is the same as the geometries included in the Kaggle competition (notice the formation energy is negative in the energy_vegard.csv dataset): **atoms_frac_xyz_vegard.csv**, **energy_vegard.csv**, **atoms_xyz_vegard.csv**, **lattice_vector_vegard.csv**.
 
+# More information about the contents of the folders of test and train:
 
 Each **final** folder contains 4 .csv files:
 * **atoms_frac_xyz.csv** - contains the final fractional coordinates (fraction of given the lattice vectors).
@@ -58,6 +61,17 @@ Each **relaxation** folder contains 5 .csv files and a folder **with_all_zeros**
 <img src="https://render.githubusercontent.com/render/math?math=z = \frac{ n_{In} }{ n_{Al} %2B n_{Ga} %2B n_{In} } ">
 
  * **with_all_zeros** - the folder contains 4 .csv files with the zeroth relaxation step number even for materials with relaxation steps which can be considered instead of the main 4 .csv files in the parent folder. Therefore, it contains extended .csv files.
+ 
+ Each **start** folder contains 4 .csv files:
+ * **atoms_frac_xyz_vegard.csv** - contains the fractional coordinates (fraction of given the lattice vectors) for the geometry given in the Kaggle competition.
+ 
+ * **energy_vegard.csv** - contains the last HOMO-LUMO value of the calculation and the last formation energy value which is calculated using the last Total Energy value. **The formation energy is negative in this dataset.**
+ 
+ * **atoms_xyz_vegard.csv** - contains the atomic positions of the atoms for the geometry given in the Kaggle competition.
+ 
+ * **lattice_vector_vegard.csv** - contains the lattice vector values for the geometry given in the Kaggle competition.
+ 
+ 
 
 The values lattice_vector_1_ang, lattice_vector_2_ang, lattice_vector_3_ang, lattice_angle_alpha_degree, lattice_angle_beta_degree, lattice_angle_gamma_degree from the Kaggle dataset were removed in this dataset.
 
@@ -92,10 +106,4 @@ Exp_04.m: LS with Unigrams for Al, In, Ga, O, RMSE: 0.0714
 ReadData.m: Input of data, save the workspace...
 
 Exp_10.m, 10a.m, 10b.m... 11b.m: sum over unigrams of Al, In, Ga of 1, r, r^2 and unigrams of O, RMSE: 0.445
-
-## To Do
-Decide whether to include the following dataset and if so, how:
-
-https://repository.nomad-coe.eu/app/gui/dataset/id/nn56nNWzSOGmuf0ptRMymg
-https://repository.nomad-coe.eu/app/gui/dataset/id/K1QTEYCNRkaeb7JQzgihsw
 
