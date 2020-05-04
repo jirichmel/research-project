@@ -20,16 +20,17 @@ An example of the start of the head of the .csv file with relaxation data:
 
 id | relaxation_step_number | ...
 ------------ | ------------- | -------------
+2 | 0 | ...
 2 | 1 | ...
-2 | 2 | ...
 . | . | ...
 . | . | ...
 . | . | ...
 
-The **test** and **train** folders contain 3 folders each:
+The **test** and **train** folders contain 4 folders each:
 * **directory_tree** - contains a directory tree, where the parent directory of every material is named after its **id** and the coresponding final data files are in a child directory of the same name and the relaxation datafiles are in a child directory which has the name of the form **id.relaxation_step_number**. E.g. in **train**, the third material would have a parent folder named **3** its final values in a child folder named **3** and its first relaxation data in a different child folder named **3.1**.
 * **final** - contains 4 .csv files of the final values: **atoms_frac_xyz.csv, atoms_xyz.csv, energy.csv, lattice_vector.csv**
-* **relaxation** - contais 5 .csv files of the relaxation values plus a file with general data describing the material: **atoms_frac_xyz_relaxation.csv, energy_relaxation.csv, lattice_vector_relaxation.csv, atoms_xyz_relaxation.csv, general.csv**
+* **relaxation** - contains a child folder **with_all_zeros** (explained below). contais 5 .csv files of the relaxation values plus a file with general data describing the material: **atoms_frac_xyz_relaxation.csv, energy_relaxation.csv, lattice_vector_relaxation.csv, atoms_xyz_relaxation.csv, general.csv**
+
 
 Each **final** folder contains 4 .csv files:
 * **atoms_frac_xyz.csv** - contains the final fractional coordinates (fraction of given the lattice vectors).
@@ -41,7 +42,7 @@ Each **final** folder contains 4 .csv files:
 * **lattice_vector.csv** - contains the final lattice vector values.
 
 
-Each **relaxation** folder contains 5 .csv files:
+Each **relaxation** folder contains 5 .csv files and a folder **with_all_zeros**:
 * **atoms_frac_xyz_relaxation.csv** - contains the fractional coordinates (fraction of given the lattice vectors) during the relaxation.
 
 * **atoms_xyz_relaxation.csv** - contains the atomic positions of the atoms.
@@ -56,10 +57,12 @@ Each **relaxation** folder contains 5 .csv files:
 <img src="https://render.githubusercontent.com/render/math?math=y = \frac{ n_{Ga} }{ n_{Al} %2B n_{Ga} %2B n_{In} } ">
 <img src="https://render.githubusercontent.com/render/math?math=z = \frac{ n_{In} }{ n_{Al} %2B n_{Ga} %2B n_{In} } ">
 
+ * **with_all_zeros** - the folder contains 4 .csv files with the zeroth relaxation step number even for materials with relaxation steps which can be considered instead of the main 4 .csv files in the parent folder. Therefore, it contains extended .csv files.
+
 The values lattice_vector_1_ang, lattice_vector_2_ang, lattice_vector_3_ang, lattice_angle_alpha_degree, lattice_angle_beta_degree, lattice_angle_gamma_degree from the Kaggle dataset were removed in this dataset.
 
-## kaggle_data_handling
-The folder contains everything needed to extract the data from the raw text files. The script used for the extraction the data in this dataset from the provided datafiles is the **kaggle_data_handling.py**. The script uses the folder structure of the provided datafiles. Modification of the paths to the files is needed if the script is to be reused. The scripts uses parallelization to multiple CPUs using the ray framework. The script is not optimized for maximum efficiency. Parallel computation is recommended. The OLS_oxide_energies script contains a method to do an OLS fit of the 3 total energies needed to calculate the formation energy.
+## Kaggle Data Extraction
+The folder contains everything needed to extract the data from the raw text files. The script used for the extraction of the data in the dataset from the provided datafiles is the **kaggle_data_handling.py**. The script extracts the data without the additional zero relaxation step numbers. The script uses the folder structure of the provided datafiles. Modification of the paths to the files is needed if the script is to be reused. The OLS_oxide_energies script contains a method to do an OLS fit of the 3 total energies needed to calculate the formation energy. For the extraction of the forces, the **kaggle_data_additional.py** was used.
 
 ## ngram
 The ngram is a crystal graph created from the structure of the cell given by the atomic positions. The folder **ngram** contains everything related to this approach of interpreting the data.
