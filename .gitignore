@@ -1,5 +1,3 @@
-kaggle_data_handling/kaggle_data_additional.ipynb
-kaggle_data_handling/kaggle_data_additional.py
 test/additional/forces.csv
 train/additional/forces.csv
 test/additional/stress_tensor_and_pressure.csv
