@@ -33,7 +33,7 @@ The **test** and **train** folders contain 5 folders each:
 * **relaxation** - contains a child folder **with_all_zeros** (explained below). contais 5 .csv files of the relaxation values plus a file with general data describing the material: **atoms_frac_xyz_relaxation.csv, energy_relaxation.csv, lattice_vector_relaxation.csv, atoms_xyz_relaxation.csv, general.csv**
 * **start** - contains 4 .csv files of the starting geometries which is the same as the geometries included in the Kaggle competition (notice the formation energy is negative in the energy_vegard.csv dataset): **atoms_frac_xyz_vegard.csv**, **energy_vegard.csv**, **atoms_xyz_vegard.csv**, **lattice_vector_vegard.csv**.
 
-# More information about the contents of the folders of test and train:
+### More information about the contents of the folders of test and train:
 
 Each **final** folder contains 4 .csv files:
 * **atoms_frac_xyz.csv** - contains the final fractional coordinates (fraction of given the lattice vectors).
