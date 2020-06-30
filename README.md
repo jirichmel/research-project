@@ -31,7 +31,7 @@ The **test** and **train** folders contain 5 folders each:
 * **directory_tree** - contains a directory tree, where the parent directory of every material is named after its **id** and the coresponding final data files are in a child directory of the same name and the relaxation datafiles are in a child directory which has the name of the form **id.relaxation_step_number**. E.g. in **train**, the third material would have a parent folder named **3** its final values in a child folder named **3** and its first relaxation data in a different child folder named **3.1**.
 * **final** - contains 4 .csv files of the final values: **atoms_frac_xyz.csv, atoms_xyz.csv, energy.csv, lattice_vector.csv**
 * **relaxation** - contains a child folder **with_all_zeros** (explained below). contais 5 .csv files of the relaxation values plus a file with general data describing the material: **atoms_frac_xyz_relaxation.csv, energy_relaxation.csv, lattice_vector_relaxation.csv, atoms_xyz_relaxation.csv, general.csv**
-* **start** - contains 4 .csv files of the starting geometries which is the same as the geometries included in the Kaggle competition (notice the formation energy is negative in the energy_vegard.csv dataset): **atoms_frac_xyz_vegard.csv**, **energy_vegard.csv**, **atoms_xyz_vegard.csv**, **lattice_vector_vegard.csv**.
+* **start** - contains 4 .csv files of the starting geometries which is the same as the geometries included in the Kaggle competition: **atoms_frac_xyz_vegard.csv**, **energy_vegard.csv**, **atoms_xyz_vegard.csv**, **lattice_vector_vegard.csv**.
 
 ### More information about the contents of the folders of test and train:
 
@@ -65,7 +65,7 @@ Each **relaxation** folder contains 5 .csv files and a folder **with_all_zeros**
  Each **start** folder contains 4 .csv files:
  * **atoms_frac_xyz_vegard.csv** - contains the fractional coordinates (fraction of given the lattice vectors) for the geometry given in the Kaggle competition.
  
- * **energy_vegard.csv** - contains the last HOMO-LUMO value of the calculation and the last formation energy value which is calculated using the last Total Energy value. **The formation energy is negative in this dataset.**
+ * **energy_vegard.csv** - contains the last HOMO-LUMO value of the calculation and the last formation energy value which is calculated using the last Total Energy value.
  
  * **atoms_xyz_vegard.csv** - contains the atomic positions of the atoms for the geometry given in the Kaggle competition.
  
