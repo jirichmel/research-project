@@ -1,0 +1,10 @@
+RMSE after grid search 5-fold CV:
+0.032640915469178605
+RMSLE after grid search 5-fold CV:
+0.02419742103823042
+MAE after grid search 5-fold CV:
+0.015207232785352465
+Best parameters:
+alpha,0.005
+gamma,0.5
+kernel,rbf

@@ -1,0 +1,9 @@
+# input file of KRR_CV_quadgram.py
+# ngram_matrix_train_path =
+"quadgram_final_train.csv"
+# ngram_matrix_test_path =
+"quadgram_final_test.csv"
+# df_egy_train_path =
+"~/helios_jupyter_virtual_env/train/final/energy.csv"
+# df_egy_test_path = 
+"~/helios_jupyter_virtual_env/test/final/energy.csv"

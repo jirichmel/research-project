@@ -1,0 +1,37 @@
+# input file of KRR_CV_unigram.py
+# unigram_matrix_path =
+# "~/helios_jupyter_virtual_env/unigram_matrix.csv"
+"unigram_matrix.csv"
+# dependent_variable_matrix_path =
+# "~/helios_jupyter_virtual_env/unigram_y.csv"
+"unigram_y.csv"
+# unigram_matrix_test_path =
+# "~/helios_jupyter_virtual_env/unigram_matrix_test.csv"
+"unigram_matrix_test.csv"
+# dependent_variable_matrix_test_path =
+# "~/helios_jupyter_virtual_env/unigram_y_test.csv"
+"unigram_y_test.csv"
+# df_frac_train_path =
+###"~/helios_jupyter_virtual_env/train/final/atoms_frac_xyz.csv"
+"~/helios_jupyter_virtual_env/train/relaxation/with_all_zeroes/frac.csv"
+# df_latt_train_path = 
+###"~/helios_jupyter_virtual_env/train/final/lattice_vector.csv"
+"~/helios_jupyter_virtual_env/train/relaxation/with_all_zeroes/lattice.csv"
+# df_gen_train_path = 
+###"~/helios_jupyter_virtual_env/train/relaxation/general.csv"
+"~/helios_jupyter_virtual_env/train/relaxation/general.csv"
+# df_egy_train_path = 
+###"~/helios_jupyter_virtual_env/train/final/energy.csv"
+"~/helios_jupyter_virtual_env/train/relaxation/with_all_zeroes/energy.csv"
+# df_frac_test_path = 
+###"~/helios_jupyter_virtual_env/test/final/atoms_frac_xyz.csv"
+"~/helios_jupyter_virtual_env/test/relaxation/with_all_zeroes/frac.csv"
+# df_latt_test_path = 
+###"~/helios_jupyter_virtual_env/test/final/lattice_vector.csv"
+"~/helios_jupyter_virtual_env/test/relaxation/with_all_zeroes/lattice.csv"
+# df_gen_test_path = 
+###"~/helios_jupyter_virtual_env/test/relaxation/general.csv"
+"~/helios_jupyter_virtual_env/test/relaxation/general.csv"
+# df_egy_test_path =
+###"~/helios_jupyter_virtual_env/test/final/energy.csv" 
+"~/helios_jupyter_virtual_env/test/relaxation/with_all_zeroes/energy.csv"

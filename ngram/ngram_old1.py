@@ -7,7 +7,7 @@
 import numpy as np
 import pandas as pd
 import networkx as nx
-import itertools as it
+
 from pymatgen import core as core
 
 #
@@ -74,45 +74,16 @@ def init_material(df_frac, df_latt, ajdi, rsn):
     material = core.IStructure(lattice=lattice, species=species, coords=coords, to_unit_cell=True, coords_are_cartesian=False)
     return material
 
-def get_hypar(df_frac, df_latt, df_gen, ajdi, rsn):
-    """Optimize hyperparametr of ngram based on spacegroup and gamma angle.
-    
-    Keyword arguments:
-    df_frac -- fractional coordinates dataframe
-    df_latt -- lattice dataframe
-    df_gen -- general data dataframe
-    ajdi -- id of the material
-    rsn -- relaxation step number of the material
-    """
-    spacegroup = df_gen["spacegroup"][df_gen["id"]==ajdi].values[0]
-    material = init_material(df_frac, df_latt, ajdi, rsn)
-    gamma = material.lattice.gamma
-    if spacegroup == 12:
-        return 1.4
-    elif spacegroup == 33:
-        return 1.4
-    elif spacegroup == 167:
-        return 1.5
-    elif spacegroup == 194:
-        return 1.3
-    elif spacegroup == 206:
-        return 1.5
-    elif spacegroup == 227:
-        if gamma < 60:
-            return 1.4
-        else:
-            return 1.5
 
-def gen_graph(mdm, material, graph_type, hypar=1.5):
+def gen_graph(material, graph_type, hypar=1.5):
     """Generates the crystal graph.
     
     Keyword arguments:
-    mdm -- minimal distance matrix
     material -- instance of IStructure
     graph_type -- options: metal_oxygen_cons, all_cons, metal_metal_cons
     hypar -- hyperparameter which tunes the decision distances, default value is 1.5
     """
-    number_of_atoms = len(mdm)
+    number_of_atoms = len(material.distance_matrix)
     
     species_vector = [str(atom) for atom in material.species]    
 
@@ -134,8 +105,8 @@ if (namei == "O" and namej != "O") or (namei != "O" and namej == "O"):
     nodej = "".join([namej," ",str(j)])
                 
     # The decision:
-    if mdm[i,j] < hypar * (radii[namei]+radii[namej]):
-        G.add_edge(nodei, nodej, distance=mdm[i,j])
+    if material.distance_matrix[i,j] < hypar * (radii[namei]+radii[namej]):
+        G.add_edge(nodei, nodej, distance=material.distance_matrix[i,j])
 """
 
     all_cons = """                
@@ -143,8 +114,8 @@ nodei = "".join([namei," ",str(i)])
 nodej = "".join([namej," ",str(j)])
                 
 # The decision:
-if mdm[i,j] < hypar * (radii[namei]+radii[namej]):
-    G.add_edge(nodei, nodej, distance=mdm[i,j])
+if material.distance_matrix[i,j] < hypar * (radii[namei]+radii[namej]):
+    G.add_edge(nodei, nodej, distance=material.distance_matrix[i,j])
 """
 
     metal_metal_cons = """
@@ -154,8 +125,8 @@ if (namei != "O" and namej != "O"):
     nodej = "".join([namej," ",str(j)])
                 
     # The decision:
-    if mdm[i,j] < hypar * (radii[namei]+radii[namej]):
-        G.add_edge(nodei, nodej, distance=mdm[i,j])
+    if material.distance_matrix[i,j] < hypar * (radii[namei]+radii[namej]):
+        G.add_edge(nodei, nodej, distance=material.distance_matrix[i,j])
 """
 
     options = {
@@ -198,114 +169,3 @@ def get_coordinations(G):
     for i in range(atoms):
         dic[node_labels[i]] = len(list(G[node_labels[i]]))
     return dic
-
-GA_COORDINATIONS = ['Ga-0', 'Ga-1', 'Ga-2', 'Ga-3', 'Ga-4', 'Ga-5', 'Ga-6', 'Ga-7', 'Ga-8', 'Ga-9', 'Ga-10']
-AL_COORDINATIONS = ['Al-0', 'Al-1', 'Al-2', 'Al-3', 'Al-4', 'Al-5', 'Al-6', 'Al-7', 'Al-8', 'Al-9', 'Al-10']
-IN_COORDINATIONS = ['In-0', 'In-1', 'In-2', 'In-3', 'In-4', 'In-5', 'In-6', 'In-7', 'In-8', 'In-9', 'In-10']
-O_COORDINATIONS = ['O-0', 'O-1', 'O-2', 'O-3', 'O-4', 'O-5', 'O-6', 'O-7', 'O-8', 'O-9', 'O-10']
-
-ALL_COORDINATIONS_UNIGRAM = AL_COORDINATIONS + GA_COORDINATIONS + IN_COORDINATIONS + O_COORDINATIONS
-ALL_COORDINATIONS_BIGRAM = []
-ALL_COORDINATIONS_TRIGRAM = []
-ALL_COORDINATIONS_QUADGRAM = []
-# general function. run only once
-def gen_all_coordinations(targeted_coordination_list, parts):
-    """Generate the list of all possible 
-    coordination combinations for ngram of 
-    given length in a easy to read format.
-    Keyword arguments:
-    targeted_coordination_list -- the output list
-    parts -- list of all combinations "of atom-coordination"
-    """
-    for thing in parts:
-        srted = sorted(thing)
-        desc = ""
-        for i in srted:
-            desc += i + "/"
-        desc = desc[:-1]
-        targeted_coordination_list.append(desc)
-        
-        
-# here we gooo
-
-def gen_desc(targeted_desc_list, G, n):
-    """Generate ngram descriptors.
-    Keyword arguments:
-    targeted_desc_list -- the output list
-    G -- the graph of the material
-    n -- the length of the subgraph
-    """
-    coordinations = get_coordinations(G)
-    for i in list(it.combinations(list(G.nodes()),n)):
-        H = G.subgraph(i)
-        subgraph_nodes = list(H.nodes())
-        subgraph_edges = list(H.edges())
-        if not len(subgraph_edges) < len(subgraph_nodes)-1:
-            parts = []
-            for node in subgraph_nodes:
-                parts.append(node.split()[0] + "-" + str(coordinations[node]))
-            parts = sorted(parts)
-            desc = ""
-            for i in parts:
-                desc += i + "/"
-            desc = desc[:-1]
-            targeted_desc_list.append(desc)
-
-def gen_matrix_row(coordinations, ALL_COORDINATIONS_NGRAM):
-    """Generates the matrix row for the given material
-    Keyword arguments:
-    coordinations -- the material coordination information
-    ALL_COORDINATIONS_NGRAM -- the list of all possible ngram features
-    """
-    hist = {}
-    for i in ALL_COORDINATIONS_NGRAM:
-        hist.update({i:0})
-    for coord in coordinations:
-        hist.update({coord:hist[coord]+1})
-    return hist            
-
-def gen_ngram_matrix(flag, df_frac, df_latt, df_gen, n, ALL_COORDINATIONS_NGRAM):
-    """Generates the ngram matrix.
-    
-    Keyword arguments:
-    flag -- type of dataset used. options: "relaxation", "final", "vegard"
-    df_frac -- dataframe of fractional coordinates
-    df_latt -- dataframe of lattice vectors
-    df_gen -- dataframe of general data
-    n -- integer, order of the n-gram
-    ALL_COORDINATIONS_UNIGRAM -- list of coordinations ranging from 0 to 10
-    """
-    if flag=="final":
-        ajdis = df_gen["id"]
-        try:
-            indexing = df_latt[["id", "relaxation_step_number"]]
-        except KeyError:
-            df_latt.insert(1, "relaxation_step_number", [-1 for i in range(len(df_latt))])
-            df_frac.insert(1, "relaxation_step_number", [-1 for i in range(len(df_frac))])
-            indexing = df_latt[["id", "relaxation_step_number"]]
-    if flag=="relaxation" or flag=="vegard":
-        ajdis = df_gen["id"]
-        indexing = df_latt[["id", "relaxation_step_number"]]
-        
-    X = []
-    for ajdi in ajdis:
-        for rsn in indexing[indexing["id"]==ajdi].relaxation_step_number.values:
-
-            material = init_material(df_frac, df_latt, ajdi, rsn)
-            mdm = material.distance_matrix
-
-            G = gen_graph(mdm, material, "metal_oxygen_cons", hypar=get_hypar(df_frac, df_latt, df_gen, ajdi, rsn))
-            mat_n = []
-            gen_desc(mat_n, G, n)
-            row = np.array(list(gen_matrix_row(mat_n, ALL_COORDINATIONS_NGRAM).values()))/material.lattice.volume
-            X.append(row)
-        print(ajdi, "ended.")
-    
-    return np.array(X)
-
-# generating ALL_COORDINATIONS_BI TRI QUAD GRAM lists
-gen_all_coordinations(ALL_COORDINATIONS_BIGRAM, it.combinations_with_replacement(ALL_COORDINATIONS_UNIGRAM, 2))
-
-gen_all_coordinations(ALL_COORDINATIONS_TRIGRAM, it.combinations_with_replacement(ALL_COORDINATIONS_UNIGRAM, 3))
-
-gen_all_coordinations(ALL_COORDINATIONS_QUADGRAM, it.combinations_with_replacement(ALL_COORDINATIONS_UNIGRAM, 4))
