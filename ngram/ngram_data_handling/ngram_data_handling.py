@@ -45,24 +45,22 @@ def matrix_decoding(vec):
     return mat
 
 @ray.remote(num_return_vals=1)
-def calculate_chunk(df_frac, df_latt, R_ions, hypar, chunk):
+def calculate_chunk(df_frac, df_latt, chunk):
     """Calculate the data for the given chunk.
     
     Keyword arguments:
     df_frac -- dataframe of the fractional atomic coordinates
     df_latt -- dataframe of the lattice vectors
-    R_ions -- dictionary of atomic radii
-    hypar -- hyperparameter which contributes to the amount of neighboring atoms
+    chunk -- part of data
     """
     ajdi_dict = {}
     for ajdi in chunk:
         rsn_dict = {}
         # Get the all the relaxation_step_number values in an array of the given id and iterate thru them.
         for rsn in df_latt.loc[df_latt["id"] == ajdi].loc[:,["relaxation_step_number"]].to_numpy().reshape(1,-1)[0]:
-            mdm, sv = ngram.minimal_distance(df_frac,df_latt,ajdi,rsn)
-            plm = ngram.get_hood(ngram.gengraph(mdm, sv, R_ions, hypar))
-            plm = matrix_coding(plm)
-            rsn_dict.update({str(rsn): plm})
+            material = ngram.init_material(df_frac, df_latt, ajdi, rsn)
+            mdm = matrix_coding(material.distance_matrix)
+            rsn_dict.update({str(rsn): mdm})
         ajdi_dict[str(ajdi)] = rsn_dict 
     print("Chunk done.")
     return ajdi_dict
@@ -96,13 +94,11 @@ def parse_input():
 
 start = time.time()
 
-R_O, R_Al, R_Ga, R_In, hypar, NUM_CPUS, lattice_vector_relaxation_path, atoms_frac_xyz_relaxation_path, general_path, json_file_name = parse_input()
+NUM_CPUS, lattice_vector_relaxation_path, atoms_frac_xyz_relaxation_path, general_path, json_file_name = parse_input()
 
 lattice_vector_relaxation = pd.read_csv(lattice_vector_relaxation_path)
 atoms_frac_xyz_relaxation = pd.read_csv(atoms_frac_xyz_relaxation_path)
 general = pd.read_csv(general_path)
-
-R_ions = { "O" : R_O, "Al" : R_Al, "Ga" : R_Ga, "In" : R_In }
 
 ray.init(num_cpus=NUM_CPUS)
 
@@ -111,7 +107,7 @@ chunks = np.array_split(general["id"].to_numpy(),NUM_CPUS)
 object_ids = []
 # Parallel forcycle:
 for core in range(NUM_CPUS): # get the object ids into a list
-    object_ids.append(calculate_chunk.remote(atoms_frac_xyz_relaxation, lattice_vector_relaxation, R_ions, hypar, chunks[core])) # remote function goes here
+    object_ids.append(calculate_chunk.remote(atoms_frac_xyz_relaxation, lattice_vector_relaxation, chunks[core])) # remote function goes here
 
 actual_parts = []
 

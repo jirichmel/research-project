@@ -1,21 +1,5 @@
 # input file of the ngram_data_handling script for train and test sets (these are train set input values)
 # format the strings with "" or '', int and float numbers normally
-#
-# Empirical data entries...not really that good.
-# Database of Ionic Radii: http://abulafia.mt.ic.ac.uk/shannon/ptable.php
-# Why these coordinations?
-# Coordination IV
-# R_O =
-1.35
-# Coordination VI
-# R_Al = 
-0.535
-# R_Ga = 
-0.62
-# R_In = 
-0.8
-# hypar = 
-1.5
 # NUM_CPUS = 
 12
 # lattice_vector_relaxation path
@@ -25,4 +9,4 @@
 # general path
 "~/helios_jupyter_virtual_env/train/relaxation/general.csv"
 # json file name
-"R_O_1.35__R_Al_0.535__R_Ga_0.62__R_In_0.8__hyp_1.5__O_connections_exluded__train.json"
+"Shannon_radii__O_connections_exluded__train.json"
