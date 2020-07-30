@@ -3,6 +3,7 @@
 
 # Version info:
 # 6.5.2020 -- deprecation custom function in facor of pymatgen package.
+# 1.7.2020 -- cumulative distance function added.
 
 import numpy as np
 import pandas as pd
@@ -117,12 +118,42 @@ def gen_graph(mdm, material, graph_type, hypar=1.5):
     species_vector = [str(atom) for atom in material.species]    
 
     # Shannon radii for coordination IV of O and coordination VI of Al, Ga, In
-
-    R_O = core.Element.O.data["Shannon radii"]["-2"]["II"][""]["ionic_radius"]
-    R_Al = core.Element.Al.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
-    R_Ga = core.Element.Ga.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
-    R_In = core.Element.In.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
-
+    # old choices of radii:
+    
+    #R_O = core.Element.O.data["Shannon radii"]["-2"]["II"][""]["ionic_radius"]
+    #R_Al = core.Element.Al.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
+    #R_Ga = core.Element.Ga.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
+    #R_In = core.Element.In.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
+    
+    # new choices: aritmetic averages (almost the same as geometric averages)
+    
+    sum_radius= \
+    core.Element.O.data["Shannon radii"]["-2"]["II"][""]["ionic_radius"] + \
+    core.Element.O.data["Shannon radii"]["-2"]["III"][""]["ionic_radius"] + \
+    core.Element.O.data["Shannon radii"]["-2"]["IV"][""]["ionic_radius"] + \
+    core.Element.O.data["Shannon radii"]["-2"]["VI"][""]["ionic_radius"] + \
+    core.Element.O.data["Shannon radii"]["-2"]["VIII"][""]["ionic_radius"]
+    R_O = (sum_radius)*(1/5)
+    
+    sum_radius= \
+    core.Element.Al.data["Shannon radii"]["3"]["IV"][""]["ionic_radius"] + \
+    core.Element.Al.data["Shannon radii"]["3"]["V"][""]["ionic_radius"] + \
+    core.Element.Al.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
+    R_Al = (sum_radius)*(1/3)
+    
+    
+    sum_radius= \
+    core.Element.Ga.data["Shannon radii"]["3"]["IV"][""]["ionic_radius"] + \
+    core.Element.Ga.data["Shannon radii"]["3"]["V"][""]["ionic_radius"] + \
+    core.Element.Ga.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
+    R_Ga = (sum_radius)*(1/3)
+    
+    sum_radius= \
+    core.Element.In.data["Shannon radii"]["3"]["IV"][""]["ionic_radius"] + \
+    core.Element.In.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"] + \
+    core.Element.In.data["Shannon radii"]["3"]["VIII"][""]["ionic_radius"]
+    R_In = (sum_radius)*(1/3)
+    
     radii = { "O" : R_O, "Al" : R_Al, "Ga" : R_Ga, "In" : R_In }
 
     G = nx.Graph() # Empty graph.
@@ -199,10 +230,10 @@ def get_coordinations(G):
         dic[node_labels[i]] = len(list(G[node_labels[i]]))
     return dic
 
-GA_COORDINATIONS = ['Ga-0', 'Ga-1', 'Ga-2', 'Ga-3', 'Ga-4', 'Ga-5', 'Ga-6', 'Ga-7', 'Ga-8', 'Ga-9', 'Ga-10']
-AL_COORDINATIONS = ['Al-0', 'Al-1', 'Al-2', 'Al-3', 'Al-4', 'Al-5', 'Al-6', 'Al-7', 'Al-8', 'Al-9', 'Al-10']
-IN_COORDINATIONS = ['In-0', 'In-1', 'In-2', 'In-3', 'In-4', 'In-5', 'In-6', 'In-7', 'In-8', 'In-9', 'In-10']
-O_COORDINATIONS = ['O-0', 'O-1', 'O-2', 'O-3', 'O-4', 'O-5', 'O-6', 'O-7', 'O-8', 'O-9', 'O-10']
+GA_COORDINATIONS = ['Ga-0', 'Ga-1', 'Ga-2', 'Ga-3', 'Ga-4', 'Ga-5', 'Ga-6', 'Ga-7', 'Ga-8', 'Ga-9'] # , 'Ga-10'
+AL_COORDINATIONS = ['Al-0', 'Al-1', 'Al-2', 'Al-3', 'Al-4', 'Al-5', 'Al-6', 'Al-7', 'Al-8', 'Al-9'] # , 'Al-10'
+IN_COORDINATIONS = ['In-0', 'In-1', 'In-2', 'In-3', 'In-4', 'In-5', 'In-6', 'In-7', 'In-8', 'In-9'] # , 'In-10'
+O_COORDINATIONS = ['O-0', 'O-1', 'O-2', 'O-3', 'O-4', 'O-5', 'O-6', 'O-7', 'O-8', 'O-9'] # , 'O-10'
 
 ALL_COORDINATIONS_UNIGRAM = AL_COORDINATIONS + GA_COORDINATIONS + IN_COORDINATIONS + O_COORDINATIONS
 ALL_COORDINATIONS_BIGRAM = []
@@ -311,69 +342,6 @@ gen_all_coordinations(ALL_COORDINATIONS_TRIGRAM, it.combinations_with_replacemen
 
 gen_all_coordinations(ALL_COORDINATIONS_QUADGRAM, it.combinations_with_replacement(ALL_COORDINATIONS_UNIGRAM, 4))
 
-def cumulative_distance_functions(df_frac, df_latt, ajdi, rsn, ALL_COORDINATIONS_NGRAM):
-    """Cumulative distance functions descriptors. CURRENTLY WORKS ONLY FOR UNIGRAMS!!!
-    Keyword arguments:
-    df_frac -- fractional coordinates dataframe
-    df_latt -- lattice dataframe
-    df_gen -- general data dataframe
-    ajdi -- id of the material
-    rsn -- relaxation step number of the material
-    ALL_COORDINATIONS_NGRAM -- all coordinations of the given ngram
-    """
-    value = {
-        "1": 0, 
-        "r^1": 1, 
-        "r^2": 2, 
-        "r^3": 3,
-        "r^4": 4,
-        "r^5": 5,
-        "r^6": 6,
-        "r^7": 7,
-        "r^8": 8,
-        "r^9": 9,
-        "r^10": 10,
-        "r^11": 11,
-        "r^12": 12,
-        "r^-1": 13, 
-        "r^-2": 14, 
-        "r^-3": 15, 
-        "r^-4": 16, 
-        "r^-5": 17,
-        "r^-6": 18,
-        "r^-7": 19,
-        "r^-8": 20,
-        "r^-9": 21,
-        "r^-10": 22,
-        "r^-11": 23,
-        "r^-12": 24,
-    }
-
-    value = {
-        "1": 0,
-        "r^1": 1,
-    }
-
-    counter = dict(zip(ALL_COORDINATIONS_NGRAM, [i for i in range(len(ALL_COORDINATIONS_NGRAM))]))
-
-    # rows are the descriptors in value dict for givin coordination
-    matrix = np.zeros((len(ALL_COORDINATIONS_NGRAM), len(value)), dtype="float64")
-
-    material = init_material(df_frac, df_latt, ajdi, rsn)
-    G = gen_graph(material.distance_matrix, material, "metal_oxygen_cons", hypar=get_hypar(df_frac, df_latt, df_gen, ajdi, rsn))
-    neighbors = get_neighbors(G)
-
-    for atom in neighbors:
-        unigram = atom.split()[0] + "-" + str(len(list(neighbors[atom])))
-        for nei in neighbors[atom]:
-            for i in range(1, 2):
-                matrix[counter[unigram], value["r^" + str(i)]] += G.get_edge_data(atom, nei)["distance"]**i
-                #matrix[counter[unigram], value["r^-" + str(i)]] += G.get_edge_data(atom, nei)["distance"]**(-i)
-            matrix[counter[unigram], value["1"]] += 1
-            
-    return matrix.reshape(1,-1)
-
-
 def cumulative_distance_functions(df_frac, df_latt, df_gen, ajdi, rsn, ALL_COORDINATIONS_NGRAM):
     """Cumulative distance functions descriptors. CURRENTLY WORKS ONLY FOR UNIGRAMS!!!
     Keyword arguments:
@@ -445,8 +413,13 @@ def cumulative_distance_functions_matrix(df_frac, df_latt, df_gen, ALL_COORDINAT
     ALL_COORDINATIONS_NGRAM -- all coordinations of the given ngram
     """
     ls = []
-    indexing = df_latt[["id", "relaxation_step_number"]]
+    try:
+        indexing = df_latt[["id", "relaxation_step_number"]]
+    except KeyError:
+        df_latt.insert(1, "relaxation_step_number", [-1 for i in range(len(df_latt))])
+        df_frac.insert(1, "relaxation_step_number", [-1 for i in range(len(df_frac))])
+        indexing = df_latt[["id", "relaxation_step_number"]]
     for ajdi in indexing["id"].values:
         for rsn in indexing[indexing["id"]==ajdi]["relaxation_step_number"].values:
             ls.append(cumulative_distance_functions(df_frac, df_latt, df_gen, ajdi, rsn, ALL_COORDINATIONS_NGRAM))
-    return np.concatenate(ls,axis=0)
+    return np.concatenate(ls, axis=0)

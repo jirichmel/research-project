@@ -118,12 +118,42 @@ def gen_graph(mdm, material, graph_type, hypar=1.5):
     species_vector = [str(atom) for atom in material.species]    
 
     # Shannon radii for coordination IV of O and coordination VI of Al, Ga, In
-
-    R_O = core.Element.O.data["Shannon radii"]["-2"]["II"][""]["ionic_radius"]
-    R_Al = core.Element.Al.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
-    R_Ga = core.Element.Ga.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
-    R_In = core.Element.In.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
-
+    # old choices of radii:
+    
+    #R_O = core.Element.O.data["Shannon radii"]["-2"]["II"][""]["ionic_radius"]
+    #R_Al = core.Element.Al.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
+    #R_Ga = core.Element.Ga.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
+    #R_In = core.Element.In.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
+    
+    # new choices: aritmetic averages (almost the same as geometric averages)
+    
+    sum_radius= \
+    core.Element.O.data["Shannon radii"]["-2"]["II"][""]["ionic_radius"] + \
+    core.Element.O.data["Shannon radii"]["-2"]["III"][""]["ionic_radius"] + \
+    core.Element.O.data["Shannon radii"]["-2"]["IV"][""]["ionic_radius"] + \
+    core.Element.O.data["Shannon radii"]["-2"]["VI"][""]["ionic_radius"] + \
+    core.Element.O.data["Shannon radii"]["-2"]["VIII"][""]["ionic_radius"]
+    R_O = (sum_radius)*(1/5)
+    
+    sum_radius= \
+    core.Element.Al.data["Shannon radii"]["3"]["IV"][""]["ionic_radius"] + \
+    core.Element.Al.data["Shannon radii"]["3"]["V"][""]["ionic_radius"] + \
+    core.Element.Al.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
+    R_Al = (sum_radius)*(1/3)
+    
+    
+    sum_radius= \
+    core.Element.Ga.data["Shannon radii"]["3"]["IV"][""]["ionic_radius"] + \
+    core.Element.Ga.data["Shannon radii"]["3"]["V"][""]["ionic_radius"] + \
+    core.Element.Ga.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
+    R_Ga = (sum_radius)*(1/3)
+    
+    sum_radius= \
+    core.Element.In.data["Shannon radii"]["3"]["IV"][""]["ionic_radius"] + \
+    core.Element.In.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"] + \
+    core.Element.In.data["Shannon radii"]["3"]["VIII"][""]["ionic_radius"]
+    R_In = (sum_radius)*(1/3)
+    
     radii = { "O" : R_O, "Al" : R_Al, "Ga" : R_Ga, "In" : R_In }
 
     G = nx.Graph() # Empty graph.
@@ -200,10 +230,10 @@ def get_coordinations(G):
         dic[node_labels[i]] = len(list(G[node_labels[i]]))
     return dic
 
-GA_COORDINATIONS = ['Ga-0', 'Ga-1', 'Ga-2', 'Ga-3', 'Ga-4', 'Ga-5', 'Ga-6', 'Ga-7', 'Ga-8', 'Ga-9', 'Ga-10']
-AL_COORDINATIONS = ['Al-0', 'Al-1', 'Al-2', 'Al-3', 'Al-4', 'Al-5', 'Al-6', 'Al-7', 'Al-8', 'Al-9', 'Al-10']
-IN_COORDINATIONS = ['In-0', 'In-1', 'In-2', 'In-3', 'In-4', 'In-5', 'In-6', 'In-7', 'In-8', 'In-9', 'In-10']
-O_COORDINATIONS = ['O-0', 'O-1', 'O-2', 'O-3', 'O-4', 'O-5', 'O-6', 'O-7', 'O-8', 'O-9', 'O-10']
+GA_COORDINATIONS = ['Ga-0', 'Ga-1', 'Ga-2', 'Ga-3', 'Ga-4', 'Ga-5', 'Ga-6', 'Ga-7', 'Ga-8', 'Ga-9'] # , 'Ga-10'
+AL_COORDINATIONS = ['Al-0', 'Al-1', 'Al-2', 'Al-3', 'Al-4', 'Al-5', 'Al-6', 'Al-7', 'Al-8', 'Al-9'] # , 'Al-10'
+IN_COORDINATIONS = ['In-0', 'In-1', 'In-2', 'In-3', 'In-4', 'In-5', 'In-6', 'In-7', 'In-8', 'In-9'] # , 'In-10'
+O_COORDINATIONS = ['O-0', 'O-1', 'O-2', 'O-3', 'O-4', 'O-5', 'O-6', 'O-7', 'O-8', 'O-9'] # , 'O-10'
 
 ALL_COORDINATIONS_UNIGRAM = AL_COORDINATIONS + GA_COORDINATIONS + IN_COORDINATIONS + O_COORDINATIONS
 ALL_COORDINATIONS_BIGRAM = []
