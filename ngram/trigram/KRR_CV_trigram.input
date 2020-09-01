@@ -1,9 +1,0 @@
-# input file of KRR_CV_trigram.py
-# ngram_matrix_train_path =
-"trigram_relaxation_train.csv"
-# ngram_matrix_test_path =
-"trigram_relaxation_test.csv"
-# df_egy_train_path =
-"~/helios_jupyter_virtual_env/train/relaxation/with_all_zeroes/energy.csv"
-# df_egy_test_path = 
-"~/helios_jupyter_virtual_env/test/relaxation/with_all_zeroes/energy.csv"

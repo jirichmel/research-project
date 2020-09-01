@@ -89,8 +89,8 @@ def rmse(true, pred):
 
 def rmsle(true, pred):
     """Calculate root mean squared logarithmic error from true and pred."""
-    #return np.sqrt(np.mean(np.square(np.log1p(pred) - np.log1p(true))))
-    return np.sqrt(sklearn.metrics.mean_squared_log_error(true, pred))
+    return np.sqrt(np.mean(np.square(np.log1p(pred) - np.log1p(true))))
+    #return np.sqrt(sklearn.metrics.mean_squared_log_error(true, pred))
 def mae(true, pred):
     """Calculate root mean squared logarithmic error from true and pred."""
     return sklearn.metrics.mean_absolute_error(true, pred)

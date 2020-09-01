@@ -120,10 +120,10 @@ def gen_graph(mdm, material, graph_type, hypar=1.5):
     # Shannon radii for coordination IV of O and coordination VI of Al, Ga, In
     # old choices of radii:
     
-    #R_O = core.Element.O.data["Shannon radii"]["-2"]["II"][""]["ionic_radius"]
-    #R_Al = core.Element.Al.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
-    #R_Ga = core.Element.Ga.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
-    #R_In = core.Element.In.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
+    R_O = core.Element.O.data["Shannon radii"]["-2"]["II"][""]["ionic_radius"]
+    R_Al = core.Element.Al.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
+    R_Ga = core.Element.Ga.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
+    R_In = core.Element.In.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
     
     # new choices: aritmetic averages (almost the same as geometric averages)
     
@@ -133,26 +133,26 @@ def gen_graph(mdm, material, graph_type, hypar=1.5):
     core.Element.O.data["Shannon radii"]["-2"]["IV"][""]["ionic_radius"] + \
     core.Element.O.data["Shannon radii"]["-2"]["VI"][""]["ionic_radius"] + \
     core.Element.O.data["Shannon radii"]["-2"]["VIII"][""]["ionic_radius"]
-    R_O = (sum_radius)*(1/5)
+    #R_O = (sum_radius)*(1/5)
     
     sum_radius= \
     core.Element.Al.data["Shannon radii"]["3"]["IV"][""]["ionic_radius"] + \
     core.Element.Al.data["Shannon radii"]["3"]["V"][""]["ionic_radius"] + \
     core.Element.Al.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
-    R_Al = (sum_radius)*(1/3)
+    #R_Al = (sum_radius)*(1/3)
     
     
     sum_radius= \
     core.Element.Ga.data["Shannon radii"]["3"]["IV"][""]["ionic_radius"] + \
     core.Element.Ga.data["Shannon radii"]["3"]["V"][""]["ionic_radius"] + \
     core.Element.Ga.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
-    R_Ga = (sum_radius)*(1/3)
+    #R_Ga = (sum_radius)*(1/3)
     
     sum_radius= \
     core.Element.In.data["Shannon radii"]["3"]["IV"][""]["ionic_radius"] + \
     core.Element.In.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"] + \
     core.Element.In.data["Shannon radii"]["3"]["VIII"][""]["ionic_radius"]
-    R_In = (sum_radius)*(1/3)
+    #R_In = (sum_radius)*(1/3)
     
     radii = { "O" : R_O, "Al" : R_Al, "Ga" : R_Ga, "In" : R_In }
 
@@ -342,7 +342,39 @@ gen_all_coordinations(ALL_COORDINATIONS_TRIGRAM, it.combinations_with_replacemen
 
 gen_all_coordinations(ALL_COORDINATIONS_QUADGRAM, it.combinations_with_replacement(ALL_COORDINATIONS_UNIGRAM, 4))
 
-def cumulative_distance_functions(df_frac, df_latt, df_gen, ajdi, rsn, ALL_COORDINATIONS_NGRAM):
+
+sum_radius= \
+core.Element.O.data["Shannon radii"]["-2"]["II"][""]["ionic_radius"] + \
+core.Element.O.data["Shannon radii"]["-2"]["III"][""]["ionic_radius"] + \
+core.Element.O.data["Shannon radii"]["-2"]["IV"][""]["ionic_radius"] + \
+core.Element.O.data["Shannon radii"]["-2"]["VI"][""]["ionic_radius"] + \
+core.Element.O.data["Shannon radii"]["-2"]["VIII"][""]["ionic_radius"]
+R_O = (sum_radius)*(1/5)
+
+sum_radius= \
+core.Element.Al.data["Shannon radii"]["3"]["IV"][""]["ionic_radius"] + \
+core.Element.Al.data["Shannon radii"]["3"]["V"][""]["ionic_radius"] + \
+core.Element.Al.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
+R_Al = (sum_radius)*(1/3)
+
+
+sum_radius= \
+core.Element.Ga.data["Shannon radii"]["3"]["IV"][""]["ionic_radius"] + \
+core.Element.Ga.data["Shannon radii"]["3"]["V"][""]["ionic_radius"] + \
+core.Element.Ga.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"]
+R_Ga = (sum_radius)*(1/3)
+
+sum_radius= \
+core.Element.In.data["Shannon radii"]["3"]["IV"][""]["ionic_radius"] + \
+core.Element.In.data["Shannon radii"]["3"]["VI"][""]["ionic_radius"] + \
+core.Element.In.data["Shannon radii"]["3"]["VIII"][""]["ionic_radius"]
+R_In = (sum_radius)*(1/3)
+
+radii = { "O" : R_O, "Al" : R_Al, "Ga" : R_Ga, "In" : R_In }
+
+
+
+def cumulative_distance_functions(df_frac, df_latt, df_gen, ajdi, rsn, ALL_COORDINATIONS_NGRAM, val=12, div=True):
     """Cumulative distance functions descriptors. CURRENTLY WORKS ONLY FOR UNIGRAMS!!!
     Keyword arguments:
     df_frac -- fractional coordinates dataframe
@@ -351,39 +383,44 @@ def cumulative_distance_functions(df_frac, df_latt, df_gen, ajdi, rsn, ALL_COORD
     ajdi -- id of the material
     rsn -- relaxation step number of the material
     ALL_COORDINATIONS_NGRAM -- all coordinations of the given ngram
+    val -- length of the matrix, options: 1, 12
+    div -- if divide the distance by atomic radii average
     """
-    value = {
-        "1": 0, 
-        "r^1": 1, 
-        "r^2": 2, 
-        "r^3": 3,
-        "r^4": 4,
-        "r^5": 5,
-        "r^6": 6,
-        "r^7": 7,
-        "r^8": 8,
-        "r^9": 9,
-        "r^10": 10,
-        "r^11": 11,
-        "r^12": 12,
-        "r^-1": 13, 
-        "r^-2": 14, 
-        "r^-3": 15, 
-        "r^-4": 16, 
-        "r^-5": 17,
-        "r^-6": 18,
-        "r^-7": 19,
-        "r^-8": 20,
-        "r^-9": 21,
-        "r^-10": 22,
-        "r^-11": 23,
-        "r^-12": 24,
-    }
-
-    value = {
-        "1": 0,
-        "r^1": 1,
-    }
+    if val==12:
+        value = {
+            "1": 0, 
+            "r^1": 1, 
+            "r^2": 2, 
+            "r^3": 3,
+            "r^4": 4,
+            "r^5": 5,
+            "r^6": 6,
+            "r^7": 7,
+            "r^8": 8,
+            "r^9": 9,
+            "r^10": 10,
+            "r^11": 11,
+            "r^12": 12,
+            "r^-1": 13, 
+            "r^-2": 14, 
+            "r^-3": 15, 
+            "r^-4": 16, 
+            "r^-5": 17,
+            "r^-6": 18,
+            "r^-7": 19,
+            "r^-8": 20,
+            "r^-9": 21,
+            "r^-10": 22,
+            "r^-11": 23,
+            "r^-12": 24,
+        }
+        
+    if val==1:
+        value = {
+            "1": 0,
+            "r^1":1,
+            "r^-1":2,
+        }
 
     counter = dict(zip(ALL_COORDINATIONS_NGRAM, [i for i in range(len(ALL_COORDINATIONS_NGRAM))]))
 
@@ -397,20 +434,26 @@ def cumulative_distance_functions(df_frac, df_latt, df_gen, ajdi, rsn, ALL_COORD
     for atom in neighbors:
         unigram = atom.split()[0] + "-" + str(len(list(neighbors[atom])))
         for nei in neighbors[atom]:
-            for i in range(1, 2):
-                matrix[counter[unigram], value["r^" + str(i)]] += G.get_edge_data(atom, nei)["distance"]**i
-                #matrix[counter[unigram], value["r^-" + str(i)]] += G.get_edge_data(atom, nei)["distance"]**(-i)
+            for i in range(1, val+1):
+                if div==True:
+                    matrix[counter[unigram], value["r^" + str(i)]] += (G.get_edge_data(atom, nei)["distance"]/radii[nei.split()[0]])**i
+                    matrix[counter[unigram], value["r^-" + str(i)]] += (G.get_edge_data(atom, nei)["distance"]/radii[nei.split()[0]])**(-i)
+                else:
+                    matrix[counter[unigram], value["r^" + str(i)]] += (G.get_edge_data(atom, nei)["distance"])**i
+                    matrix[counter[unigram], value["r^-" + str(i)]] += (G.get_edge_data(atom, nei)["distance"])**(-i)
             matrix[counter[unigram], value["1"]] += 1
             
     return matrix.reshape(1,-1)
 
-def cumulative_distance_functions_matrix(df_frac, df_latt, df_gen, ALL_COORDINATIONS_NGRAM):
+def cumulative_distance_functions_matrix(df_frac, df_latt, df_gen, ALL_COORDINATIONS_NGRAM, val=12, div=True):
     """Cumulative distance functions descriptors. CURRENTLY WORKS ONLY FOR UNIGRAMS!!!
     Keyword arguments:
     df_frac -- fractional coordinates dataframe
     df_latt -- lattice dataframe
     df_gen -- general data dataframe
     ALL_COORDINATIONS_NGRAM -- all coordinations of the given ngram
+    val -- length of the matrix, options: 1, 12
+    div -- if divide the distance by atomic radii average
     """
     ls = []
     try:
@@ -419,7 +462,68 @@ def cumulative_distance_functions_matrix(df_frac, df_latt, df_gen, ALL_COORDINAT
         df_latt.insert(1, "relaxation_step_number", [-1 for i in range(len(df_latt))])
         df_frac.insert(1, "relaxation_step_number", [-1 for i in range(len(df_frac))])
         indexing = df_latt[["id", "relaxation_step_number"]]
-    for ajdi in indexing["id"].values:
+    ajdis = df_gen["id"].values
+    for ajdi in ajdis:
         for rsn in indexing[indexing["id"]==ajdi]["relaxation_step_number"].values:
-            ls.append(cumulative_distance_functions(df_frac, df_latt, df_gen, ajdi, rsn, ALL_COORDINATIONS_NGRAM))
+            ls.append(cumulative_distance_functions(df_frac, df_latt, df_gen, ajdi, rsn, ALL_COORDINATIONS_NGRAM, val, div))
     return np.concatenate(ls, axis=0)
+
+def reduce_unigram_matrix(matrix, cutoff=5, reduce=True):
+    """Reduces the number of ngram columns based on cut-off value. 
+    Values from these columns are added to the nearest column with
+    higher percentage than cutoff.
+    Keyword argmunts:
+    matrix -- unigarm matrix to be reduced
+    cutoff -- cutoff value in percent
+    reduce -- reduce the dim of the matrix
+    """
+    print("Cut-off set at", cutoff, ".")
+    if reduce:
+        print("Reducing the dimension...")
+    count = []
+    shape = matrix.shape
+    for col in matrix.T:
+        count.append(np.count_nonzero(col))
+    count = 100*np.array(count)/shape[0]
+    split_matrix = [i.T for i in np.vsplit(matrix.T, 4)]
+    
+    # Al
+    split_matrix[0][:,4] += np.dot(split_matrix[0][:,:4],np.ones(split_matrix[0][:,:4].shape[1]))
+    split_matrix[0][:,6] += np.dot(split_matrix[0][:,7:],np.ones(split_matrix[0][:,7:].shape[1]))
+
+    # Ga
+    split_matrix[1][:,4] += np.dot(split_matrix[1][:,:4],np.ones(split_matrix[1][:,:4].shape[1]))
+    split_matrix[1][:,6] += np.dot(split_matrix[1][:,7:],np.ones(split_matrix[1][:,7:].shape[1]))
+    
+    # In
+    split_matrix[2][:,4] += np.dot(split_matrix[2][:,:4],np.ones(split_matrix[2][:,:4].shape[1]))
+    split_matrix[2][:,7] += np.dot(split_matrix[2][:,8:],np.ones(split_matrix[2][:,8:].shape[1]))
+    
+    # O
+    split_matrix[3][:,2] += np.dot(split_matrix[3][:,:2],np.ones(split_matrix[3][:,:2].shape[1]))
+    split_matrix[3][:,5] += np.dot(split_matrix[3][:,6:],np.ones(split_matrix[3][:,6:].shape[1]))
+    
+    split_count = np.split(count, 4)
+    if not reduce:
+        for j in range(len(split_matrix)):
+            indices_of_cut = [i for i, x in enumerate(split_count[j]<cutoff) if x]
+            split_matrix[j][:, indices_of_cut] = 0
+        
+    else:
+        for j in range(len(split_matrix)):
+            indices_of_cut = [i for i, x in enumerate(split_count[j]<cutoff) if not x]
+            split_matrix[j] = split_matrix[j][:, indices_of_cut]
+    
+    return np.concatenate([i.T for i in split_matrix]).T
+
+def remove_empty(matrix):
+    """Removes ngram columns with no entries.
+    Keyword arguments:
+    matrix -- ngram matrix.
+    """
+    count = []
+    shape = matrix.shape
+    for i in matrix.T:
+        if not np.sum(i)==0:
+            count.append(i)
+    return np.array(count).T

@@ -1,0 +1,34 @@
+#!/bin/bash
+### Job Name
+#PBS -N ngram_matrix_unigram_avr_start
+### required runtime
+#PBS -l walltime=24:00:00
+### queue for submission
+#PBS -q cpu_b
+
+# Merge output and error files
+#PBS -j oe
+
+### get the number of CPUs from the .input file
+### -v a=$(sed -n '/NUM_CPUS/{n;p;}' ngram_data_handling.input)
+
+### Request x GB of memory and X CPU cores ( old syntax)
+#PBS -l mem=256G,ncpus=4
+
+### Send me an e-mail when the job has aborted or finished.
+### -m ae
+
+### Email address.
+### -M chmelji6@fjfi.cvut.cz
+
+### start the job in the directory it was submitted from
+###cd $PBS_O_WORKDIR
+
+cd helios_jupyter_virtual_env
+
+# activate the Python virtual enviroment
+source bin/activate
+
+### run the application (with input from the .input file)
+cd $PBS_O_WORKDIR
+cat ngram_matrix.input.start | python ngram_matrix.py

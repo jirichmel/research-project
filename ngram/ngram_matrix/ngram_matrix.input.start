@@ -1,0 +1,21 @@
+# input file of ngram_matrix.py
+# df_frac_train_path =
+"~/helios_jupyter_virtual_env/train/start/frac_vegard.csv"
+# df_latt_train_path = 
+"~/helios_jupyter_virtual_env/train/start/lattice_vegard.csv"
+# df_gen_train_path = 
+"~/helios_jupyter_virtual_env/train/relaxation/general.csv"
+# df_egy_train_path = 
+"~/helios_jupyter_virtual_env/train/start/energy_vegard.csv"
+# df_frac_test_path = 
+"~/helios_jupyter_virtual_env/test/start/frac_vegard.csv"
+# df_latt_test_path = 
+"~/helios_jupyter_virtual_env/test/start/lattice_vegard.csv"
+# df_gen_test_path = 
+"~/helios_jupyter_virtual_env/test/relaxation/general.csv"
+# df_egy_test_path =
+"~/helios_jupyter_virtual_env/test/start/energy_vegard.csv" 
+# NUM_CPUS =
+4
+# label =
+"vegard"
