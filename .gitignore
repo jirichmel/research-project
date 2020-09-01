@@ -12,13 +12,13 @@ ngram/cdf_matrix/*
 ngram/ngram_matrix/*
 ngram/ngram_data_handling_DEPRECATED
 !ngram/unigram/KRR_CV_unigram.py
-!ngram/unigram/KRR_CV_unigram.inout
+!ngram/unigram/KRR_CV_unigram.input
 !ngram/unigram/KRR_CV_unigram.job
 !ngram/bigram/KRR_CV_bigram.py
-!ngram/bigram/KRR_CV_bigram.inout
+!ngram/bigram/KRR_CV_bigram.input
 !ngram/bigram/KRR_CV_bigram.job
 !ngram/trigram/KRR_CV_trigram.py
-!ngram/trigram/KRR_CV_trigram.inout
+!ngram/trigram/KRR_CV_trigram.input
 !ngram/trigram/KRR_CV_trigram.job
 !ngram/ngram_matrix/ngram_matrix.py
 !ngram/ngram_matrix/ngram_matrix.input.final

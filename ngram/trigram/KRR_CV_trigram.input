@@ -1,0 +1,70 @@
+# input file of KRR_CV_trigram.py
+# bigram_matrix_train_path_VEGARD =
+#"../ngram_matrix/trigram_start_avr_train.csv"
+#"../ngram_matrix/trigram_vegard_min_train.csv"
+"../ngram_matrix/trigram_vegard_competition_train.csv"
+# unigram_matrix_test_path_VEGARD =
+#"../ngram_matrix/trigram_start_avr_test.csv"
+#"../ngram_matrix/trigram_vegard_min_test.csv"
+"../ngram_matrix/trigram_vegard_competition_test.csv"
+# bigram_cdf_train_path_VEGARD =
+#"../cdf_matrix/unigram_start_train_cdf_1_r1_r-1.csv"
+#"../cdf_matrix/unigram_start_train_cdf_1_rR1_rR-1.csv"
+#"../cdf_matrix/unigram_start_train_cdf_1_r12_r-12.csv"
+"../cdf_matrix/unigram_start_train_cdf_1_rR12_rR-12.csv"
+# bigram_cdf_test_path_VEGARD =
+#"../cdf_matrix/unigram_start_test_cdf_1_r1_r-1.csv"
+#"../cdf_matrix/unigram_start_test_cdf_1_rR1_rR-1.csv"
+#"../cdf_matrix/unigram_start_test_cdf_1_r12_r-12.csv"
+"../cdf_matrix/unigram_start_test_cdf_1_rR12_rR-12.csv"
+#df_egy_train_path_VEGARD =
+"../../train/start/energy_vegard.csv"
+# df_egy_test_path_VEGARD =
+"../../test/start/energy_vegard.csv"
+# bigram_matrix_train_path_RELAX =
+"../ngram_matrix/trigram_relaxation_avr_train.csv"
+# bigram_matrix_test_path_RELAX =
+"../ngram_matrix/trigram_relaxation_avr_test.csv"
+# bigram_cdf_train_path_RELAX =
+#"../cdf_matrix/unigram_relaxation_train_cdf_1_r1_r-1.csv"
+#"../cdf_matrix/unigram_relaxation_train_cdf_1_rR1_rR-1.csv"
+#"../cdf_matrix/unigram_relaxation_train_cdf_1_r12_r-12.csv"
+"../cdf_matrix/unigram_relaxation_train_cdf_1_rR12_rR-12.csv"
+# unigram_cdf_test_path_RELAX =
+#"../cdf_matrix/unigram_relaxation_test_cdf_1_r1_r-1.csv"
+#"../cdf_matrix/unigram_relaxation_test_cdf_1_rR1_rR-1.csv"
+#"../cdf_matrix/unigram_relaxation_test_cdf_1_r12_r-12.csv"
+"../cdf_matrix/unigram_relaxation_test_cdf_1_rR12_rR-12.csv"
+# df_egy_train_path_RELAX =
+"../../train/relaxation/with_all_zeroes/energy.csv"
+# df_egy_test_path_RELAX =
+"../../test/relaxation/with_all_zeroes/energy.csv"
+# bigram_matrix_train_path_FINAL =
+#"../ngram_matrix/trigram_final_avr_train.csv"
+"../ngram_matrix/trigram_final_competition_train.csv"
+#"../ngram_matrix/trigram_final_min_train.csv"
+# bigram_matrix_test_path_FINAL =
+#"../ngram_matrix/trigram_final_avr_test.csv"
+"../ngram_matrix/trigram_final_competition_test.csv"
+#"../ngram_matrix/trigram_final_min_test.csv"
+#bigram_cdf_train_path_FINAL =
+#"../cdf_matrix/unigram_final_train_cdf_1_r1_r-1.csv"
+#"../cdf_matrix/unigram_final_train_cdf_1_rR1_rR-1.csv"
+#"../cdf_matrix/unigram_final_train_cdf_1_r12_r-12.csv"
+"../cdf_matrix/unigram_final_train_cdf_1_rR12_rR-12.csv"
+# bigram_cdf_test_path_FINAL =
+#"../cdf_matrix/unigram_final_test_cdf_1_r1_r-1.csv"
+#"../cdf_matrix/unigram_final_test_cdf_1_rR1_rR-1.csv"
+#"../cdf_matrix/unigram_final_test_cdf_1_r12_r-12.csv"
+"../cdf_matrix/unigram_final_test_cdf_1_rR12_rR-12.csv"
+# df_egy_train_path_FINAL =
+"../../train/final/energy.csv"
+# df_egy_test_path_FINAL =
+"../../test/final/energy.csv"
+#
+# dataset_label =
+"vegard"
+#"relaxation"
+#"final"
+#"vegardfinal"
+#"weirdest"
